@@ -70,15 +70,16 @@ class Automator:
             # 滑动屏幕，收割金币。
             self.swipe()
 
-            #判断点不点红包
-            # cnt += 1
-            # self.d.click(0.4, 0.958)
-            # time.sleep(2)
-            # print("detect redpocket")
-            # self._have_redpocket()
-            # print("detect finished")
-            # self.d.click(0.1, 0.958)
-            # time.sleep(2)
+            # 判断点不点红包
+            self.d.click(0.4, 0.958)
+            short_wait()
+            print("detect redpocket")
+            self._have_redpocket_first()
+            self._have_redpocket_second()
+            self._have_redpocket_third()
+            print("detect finished")
+            short_wait()
+            self.d.click(50/533, 931/948)
 
     def upgrade(self, upgrade_list):
         self._open_upgrade_interface()
@@ -212,12 +213,16 @@ class Automator:
         if B < R:
             self.d.click(0.9, 0.57)
 
-    def _have_redpocket(self):
-        screen = self.d.screenshot(format="opencv")
-        R, G, B = UIMatcher.getPixel(screen, 0.184,0.263)
+    def _have_redpocket_first(self):
+        # while True:
+        #     self.d.click(84/533,688/940)
+        print("test_first")
         while True:
-            if R < G:
-                self.d.click(0.184,0.263)
+            screen = self.d.screenshot(format="opencv")
+            R, G, B = UIMatcher.getPixel(screen, 152 / 533, 312 / 948)
+            print(R,G,B)
+            if R >= 180 and G < 110:
+                self.d.click(152/533,312/948)
                 while True:
                     screen_1 = self.d.screenshot(format="opencv")
                     R_1, G_1, B_1 = UIMatcher.getPixel(screen_1, 0.487, 0.831)
@@ -226,10 +231,13 @@ class Automator:
                     else: break
             else: break
 
-        R, G, B = UIMatcher.getPixel(screen, 0.503,0.263)
+    def _have_redpocket_second(self):
+        print("test_second")
         while True:
-            if R < G:
-                self.d.click(0.503,0.317)
+            screen = self.d.screenshot(format="opencv")
+            R, G, B = UIMatcher.getPixel(screen, 316 / 533, 312 / 948)
+            if R >= 180 and G < 110:
+                self.d.click(316/533,312/948)
                 while True:
                     screen_1 = self.d.screenshot(format="opencv")
                     R_1, G_1, B_1 = UIMatcher.getPixel(screen_1, 0.487, 0.831)
@@ -239,11 +247,13 @@ class Automator:
             else:
                 break
 
-
-        R, G, B = UIMatcher.getPixel(screen, 0.811,0.263)
+    def _have_redpocket_third(self):
+        print("test_third")
         while True:
-            if R < G:
-                self.d.click(0.811,0.317)
+            screen = self.d.screenshot(format="opencv")
+            R, G, B = UIMatcher.getPixel(screen, 480 / 533, 312 / 948)
+            if R >= 180 and G < 110:
+                self.d.click(480/533,312/948)
                 while True:
                     screen_1 = self.d.screenshot(format="opencv")
                     R_1, G_1, B_1 = UIMatcher.getPixel(screen_1, 0.487, 0.831)
